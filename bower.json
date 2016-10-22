@@ -1,0 +1,17 @@
+{
+  "name": "jquery-route",
+  "homepage": "https://github.com/tpnet3/jquery-route",
+  "description": "",
+  "main": "",
+  "authors": [
+    "tpnet3"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
