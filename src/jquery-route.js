@@ -90,10 +90,12 @@ jQuery.route = {
     loadedRoute: {}
 }
 
-$(document).ready(jQuery.route.enchantUrlHandler);
-$(window).on('hashchange', jQuery.route.enchantUrlHandler);
-
 jQuery.fn.route = function(uri, callback) {
+    if (jQuery.route.callback.length == 0) {
+        $(document).ready(jQuery.route.enchantUrlHandler);
+        $(window).on('hashchange', jQuery.route.enchantUrlHandler);
+    }
+
     var checkFunc = function() {
         var regex = new RegExp("^" + uri.replace(/\{\*}$/, "(.+)").replace(/\{([^\/]+)}/g, "([^\\/]+)") + "$");
         var path = jQuery.route.path();
