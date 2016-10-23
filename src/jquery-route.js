@@ -1,4 +1,4 @@
-jQuery.route = {
+jQuery.route = jQuery.route || {
 
     uri: function(goUri) {
         var href = window.location.href;
@@ -90,7 +90,7 @@ jQuery.route = {
     loadedRoute: {}
 }
 
-jQuery.fn.route = function(uri, callback) {
+jQuery.fn.route = jQuery.fn.route || function(uri, callback) {
     if (jQuery.route.callback.length == 0) {
         $(document).ready(jQuery.route.enchantUrlHandler);
         $(window).on('hashchange', jQuery.route.enchantUrlHandler);
