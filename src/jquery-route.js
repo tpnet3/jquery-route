@@ -80,9 +80,21 @@ jQuery.route = jQuery.route || {
     enchantUrlHandler: function() {
         if (jQuery.route.enchantUrl()) {
             setTimeout(function() {
-                jQuery.each(jQuery.route.callback, function(index, value) {
-                    value();
-                })
+                var keys = Object.keys(jQuery.route.callback);
+
+                for (var i = 0; i < keys.length; i++) {
+                    var existCallback = false;
+
+                    jQuery.each(jQuery.route.callback[keys[i]], function(index, value) {
+                        if (value()) {
+                            existCallback = true;
+                        }
+                    })
+
+                    if (existCallback) {
+                        break;
+                    }
+                }
             }, 0);
         }
     },
@@ -90,7 +102,9 @@ jQuery.route = jQuery.route || {
     loadedRoute: {}
 }
 
-jQuery.fn.route = jQuery.fn.route || function(uri, callback) {
+jQuery.fn.route = jQuery.fn.route || function(uri, callback, priority) {
+    priority = priority || 0;
+
     if (jQuery.route.callback.length == 0) {
         $(document).ready(jQuery.route.enchantUrlHandler);
         $(window).on('hashchange', jQuery.route.enchantUrlHandler);
@@ -117,6 +131,8 @@ jQuery.fn.route = jQuery.fn.route || function(uri, callback) {
                     query: jQuery.route.query(),
                     hash: jQuery.route.hash()
                 })
+
+                return true;
             } else if ( ! jQuery.route.loadedRoute[uri]) {
                 $.getScript(callback)
                     .done(function( script, textStatus ) {
@@ -128,9 +144,12 @@ jQuery.fn.route = jQuery.fn.route || function(uri, callback) {
                     });
             }
         }
+
+        return false;
     }
 
-    jQuery.route.callback.push(checkFunc);
+    jQuery.route.callback[priority] = jQuery.route.callback[priority] || [];
+    jQuery.route.callback[priority].push(checkFunc);
 
     return this;
 };
