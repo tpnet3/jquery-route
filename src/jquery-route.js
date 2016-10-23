@@ -1,12 +1,14 @@
 jQuery.route = jQuery.route || {
 
-    uri: function(goUri, callback) {
+    uri: function(goUri) {
         var href = window.location.href;
         var index = href.indexOf("#!");
 
         if (goUri) {
-            window.location.replace(href.slice(0, index == -1 ? href.length : index) + "#!" + goUri);
-            if (callback) callback();
+            setTimeout(function() {
+                window.location.replace(href.slice(0, index == -1 ? href.length : index) + "#!" + goUri);
+            }, 0);
+            
             return goUri;
         } else if (index != -1) {
             var uri = href.slice(index + 2, href.length);
