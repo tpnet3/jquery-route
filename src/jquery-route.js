@@ -142,6 +142,8 @@ jQuery.fn.route = jQuery.fn.route || function(uri, callback, priority) {
                     .fail(function( jqxhr, settings, exception ) {
                         $(window).trigger("jqueryRouteLoadFail");
                     });
+
+                return true;
             }
         }
 
