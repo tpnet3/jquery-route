@@ -134,16 +134,16 @@ jQuery.fn.route = jQuery.fn.route || function(uri, callback, priority) {
 
                 return true;
             } else if ( ! jQuery.route.loadedRoute[uri]) {
-                $(document).trigger("jqueryRouteLoadStart", [uri]);
+                $(document).trigger("jqueryRouteLoadStart", [callback]);
 
                 $.getScript(callback)
                     .done(function(script, textStatus) {
                         jQuery.route.loadedRoute[uri] = true;
                         $(window).trigger("hashchange");
-                        $(document).trigger("jqueryRouteLoadSuccess", [uri]);
+                        $(document).trigger("jqueryRouteLoadSuccess", [callback]);
                     })
                     .fail(function(jqxhr, settings, exception) {
-                        $(document).trigger("jqueryRouteLoadFail", [uri]);
+                        $(document).trigger("jqueryRouteLoadFail", [callback]);
                     });
 
                 return true;
